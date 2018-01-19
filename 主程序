@@ -1,0 +1,230 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int yishuju,ershuju;
+typedef struct 
+	{
+		int num;
+		char name[10];
+		char xing[2];
+		char bir[10];
+		char dizhi[50]; 
+	}student;
+	
+void input(student stu[],int n)
+{
+	int i,j;
+
+	for(i=0;i<n;i++)
+	{
+		printf("请输入第 %d 个人的个人信息\n",i+1);
+		printf("学号： ");
+		scanf("%d",&stu[i].num);
+		getchar();
+		printf("姓名： ");
+		gets(stu[i].name);
+		printf("性别（男/女）： ");
+		gets(stu[i].xing);
+		printf("生日（xxxx.xx.xx）: ");
+		gets(stu[i].bir);
+		printf("家庭地址： ");
+		gets(stu[i].dizhi); 
+	}
+	printf("请按回车显示输入结果！");
+	getchar();
+	system("cls");
+	printf("以下是本次输入的成绩：\n");
+	for(i=0;i<n;i++)
+	{
+		printf("学号：%d\n",stu[i].num);
+		printf("姓名：%s\n",stu[i].name);
+		printf("性别：%s\n",stu[i].xing);
+		printf("生日：%s\n",stu[i].bir);
+		printf("家庭地址：%s\n",stu[i].dizhi);
+	}
+	printf("\n按回车返回");
+	getchar();
+	system("cls");
+	return; 
+
+	
+} 
+void change(student stu[],int n)
+{
+	int i,k=1,weizhi=-1,q;
+	char xiugai[50];
+	for(i=0;i<yishuju;i++)
+	{
+		if(stu[i].num==n) weizhi=i;
+	}
+	if(weizhi==-1) 
+	{
+		getchar();
+		printf("输入错误请按回车键退出！");
+		getchar();
+		system("cls");
+		return; 
+	}
+	printf("请按回车键开始修改信息！\n");
+	getchar();
+	while(k)
+	{
+		printf("1.姓名\n");
+		printf("2.性别\n");
+		printf("3.出生日期\n");
+		printf("4.家庭地址\n");
+		printf("5.结束修改\n");
+		printf("\n请输入要修改的信息的序号：");
+		scanf("%d",&q);
+		switch(q)
+		{
+			case 1:
+			{
+				system("cls") ;
+				printf("请输入修改后的姓名：");
+				getchar();
+				gets(xiugai);
+				strcpy(stu[weizhi].name,xiugai);
+				printf("修改成功！按回车键退出！");
+				getchar(); 
+				system("cls");
+				break;
+			}
+			case 2:
+			{
+				system("cls") ;
+				printf("请输入修改后的性别：");
+				getchar();
+				gets(xiugai);
+				strcpy(stu[weizhi].xing,xiugai);
+				printf("修改成功！按回车键退出！");
+				getchar(); 
+				system("cls");
+				break;
+				
+			}
+			case 3:
+			{
+				system("cls") ;
+				printf("请输入修改后的出生日期：");
+				getchar();
+				gets(xiugai);
+				strcpy(stu[weizhi].bir,xiugai);
+				printf("修改成功！按回车键退出！");
+				getchar(); 
+				system("cls");
+				getchar();
+				break;
+			}
+			case 4:
+			{
+				system("cls") ;
+				printf("请输入修改后的地址：");
+				getchar();
+				gets(xiugai);
+				strcpy(stu[weizhi].dizhi,xiugai);
+				printf("修改成功！按回车键退出！");
+				getchar(); 
+				system("cls");
+				break;
+			}
+			default:
+			{
+				printf("序号输入错误请重新输入！");
+				break; 
+			}
+			case 5:
+			{
+				system("cls");
+				return;
+			}
+		}
+	}
+	
+     
+}
+void inputnew(int n)
+{
+	
+}
+void outdate(int n)
+{
+	
+}
+void query()
+{
+	
+}
+void paixu(int i)
+{
+	
+}
+void tongji()
+{
+	
+}
+void output()
+{
+	
+}
+void outfile()
+{
+	
+}
+int main()
+{
+	int i,j,k=1,yi,er;
+
+	student stu[50];
+	printf("**********学生档案管理系统**********\n");
+	printf("*请输入以下对应的数字实现对应的功能*\n");
+	printf("************************************\n");
+	printf("*************1.主菜单***************\n");
+	printf("*************2.退出本程序***********\n");
+    printf("请输入您要执行的操作（输入数字）： ");
+	scanf("%d",&yi); 
+	switch(yi)
+	{
+		case 1:system("cls");break;
+		default:printf("输入错误请退出后重试！！");exit(0);break; 
+		case 2:printf("再次按空格键退出。\n");exit(0);
+	}
+	while(k==1)
+	{printf("**********学生档案管理系统**********\n");
+	printf("*请输入以下对应的数字实现对应的功能*\n");
+	printf("*************1.输入数据*************\n");
+	printf("*************2.修改数据*************\n");
+	printf("*************3.增加数据*************\n");
+	printf("*************4.插入数据*************\n");
+	printf("*************5.删除数据*************\n");
+	printf("*************6.查询数据*************\n");
+	printf("*************7.排序数据*************\n");
+	printf("*************8.输出数据*************\n");
+    printf("请输入您要执行的操作（输入数字）： ");
+	scanf("%d",&er); 
+	switch(er)
+	{
+		case 1:
+		{
+			system("cls");
+			printf("请输入本次要记录的数据总数(注意：本操作将会覆盖之前的数据请谨慎操作！)： ");
+			scanf("%d",&yishuju); 
+			input(stu,yishuju);
+			break;
+		} 
+		case 2:
+		{
+			system("cls");
+			printf("请输入要修改学生的学号： ");
+			scanf("%d",&ershuju);
+			change(stu,ershuju); 
+			break; 
+		}
+		case 3:
+		{
+			system("cls");
+		}
+	}
+	}
+
+}

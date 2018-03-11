@@ -1,29 +1,30 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-int yishuju,ershuju;
+int yishuju,ershuju,sanshuju;
 typedef struct 
 	{
 		int num;
 		char name[10];
-		char xing[2];
+		char xing[4];
 		char bir[10];
 		char dizhi[50]; 
 	}student;
+
 	
-void input(student stu[],int n)
+void input(student stu[],int n)//输入 
 {
 	int i,j;
 
 	for(i=0;i<n;i++)
 	{
-		printf("请输入第 %d 个人的个人信息\n",i+1);
+		printf("\n请输入第 %d 个人的个人信息\n",i+1);
 		printf("学号： ");
 		scanf("%d",&stu[i].num);
 		getchar();
 		printf("姓名： ");
 		gets(stu[i].name);
-		printf("性别（男/女）： ");
+        printf("性别（男/女）： ");
 		gets(stu[i].xing);
 		printf("生日（xxxx.xx.xx）: ");
 		gets(stu[i].bir);
@@ -49,7 +50,7 @@ void input(student stu[],int n)
 
 	
 } 
-void change(student stu[],int n)
+void change(student stu[],int n)//修改 
 {
 	int i,k=1,weizhi=-1,q;
 	char xiugai[50];
@@ -143,7 +144,7 @@ void change(student stu[],int n)
 	
      
 }
-void inputnew(student stu[])
+void inputnew(student stu[])//添加信息 
 {
 	int i;
 	printf("请输入本次要添加的学生信息的数量：");
@@ -181,35 +182,800 @@ void inputnew(student stu[])
 	system("cls");
 	return; 
 }
-void outdate(int n)
+void outdate_num(student stu[])//删除信息——通过学号 
 {
+	int i,k,j,n,p,b=1,a=1;
+    printf("请输入要删除的学号:");
+	scanf("%d",&n);
+	for(i=0;i<yishuju;i++)
+	{
+		if(stu[i].num==n)
+		{
+			b=0;
+			while(a)
+			{printf("请核对以下信息：\n");
+			printf("学号：%d\n",stu[i].num);
+		    printf("姓名：%s\n",stu[i].name);
+		    printf("性别：%s\n",stu[i].xing);
+		    printf("生日：%s\n",stu[i].bir);
+		    printf("家庭地址：%s\n",stu[i].dizhi);
+		    printf("请确认是否要删除此学生信息！（按1确认按2取消  输入后请按回车！）：");
+		    scanf("%d",&j);
+		    switch(j)
+		    {
+    			case 1:
+    			{
+			    	for(p=i;p<yishuju;p++)
+			    	{
+	    				stu[p]=stu[p+1];
+	    			}
+	    			yishuju-=1;
+	    			printf("/n操作成功！！");
+	    			getchar();
+	    			getchar();
+	    			system("cls");
+	    			a=0;
+	    			break;
+			    }
+			    default:
+			    {
+			    	printf("输入错误请按回车键重试！");
+					getchar();
+					getchar(); 
+					system("cls");			    	
+    				break;
+    			}
+			    case 2:
+			    {
+			    	a=0;
+			    	system("cls");
+    				break;
+    			}
+    		}}
+		}
+		
+	}
+	if(b==1)
+	{
+		printf("查无此人！！");
+		getchar();
+		getchar();
+		system("cls");
+	}
+}
+void outdate_name(student stu[])//删除信息——通过姓名 
+{
+	char n[10];
+	int i,j=0,p,b=1,a=1;
+	printf("请输入想要删除信息的姓名：");
+    gets(n); 
+	getchar();
+	for(i=0;i<yishuju;i++)
+	{
+		if(strcmp(stu[i].name,n)==0)
+		{
+			b=0;
+			while(a)
+			{printf("请核对以下信息：\n");
+			printf("学号：%d\n",stu[i].num);
+		    printf("姓名：%s\n",stu[i].name);
+		    printf("性别：%s\n",stu[i].xing);
+		    printf("生日：%s\n",stu[i].bir);
+		    printf("家庭地址：%s\n",stu[i].dizhi);
+		    printf("请确认是否要删除此学生信息！（按1确认按2取消  输入后请按回车！）：");
+		    scanf("%d",&j);
+		    getchar();
+		    getchar();
+		    switch(j)
+		    {
+    			case 1:
+    			{
+			    	for(p=i;p<yishuju;p++)
+			    	{
+	    				stu[p]=stu[p+1];
+	    			}
+	    			yishuju-=1;
+	    			printf("/n操作成功！！");
+	    			getchar();
+	    			getchar();
+	    			system("cls");
+	    			a=0;
+	    			return;
+	    			break;
+			    }
+			    default:
+			    {
+			    	printf("输入错误请按回车键重试！");
+					getchar();
+					getchar(); 
+					system("cls");			    	
+    				break;
+    			}
+			    case 2:
+			    {
+			    	a=0;
+			    	system("cls");
+    				break;
+    			}
+    		}}
+		}
+	}
+	if(b==1)
+	{
+
+		printf("\n查无此人！！");
+		getchar();
+		system("cls");
+		return;
+	} 
+}
+void outdate(student stu[])//删除信息——主函数 
+{
+	int i;
+	while(1)
+	{printf("**********删除信息**********\n");
+	printf("          1.学号 \n");
+	printf("          2.姓名\n");
+	printf("          3.退出\n");	
+	printf("\n请输入检索方式：");
+	scanf("%d",&i);
+	getchar();
+	switch(i)
+	{
+		case 1:
+		{
+			system("cls");
+			outdate_num(stu);
+			break;
+		}
+		case 2:
+		{
+			system("cls");
+			outdate_name(stu);
+			break;
+		}
+		default:
+		{
+            printf("数字输入错误请重试！按回车键重试！");
+			getchar();
+			getchar();
+			system("cls");
+			break; 
+		}
+		case 3:
+		{
+			system("cls");
+			return;
+		}
+	}}
+}
+void query_num(student stu[])//查询——学号 
+{
+	int i,j,a,c,d=0,b[20],k[20];
+	printf("请输入本次要查询的学生个数(不大于20)： ");
+	scanf("%d",&j);
+	for(i=0;i<j;i++)
+	{
+		printf("\n请输入要查找的第%d个学生的学号：",i+1);
+		scanf("%d",&k[i]); 
+	} 
+	for(a=0;a<j;a++)
+	{
+		c=0;
+		for(i=0;i<yishuju;i++)
+		{
+			if(k[a]==stu[i].num)
+			{
+			     printf("\n第%d个学生的信息为：\n",a+1);
+			     printf("学号：%d\n",stu[i].num);
+		         printf("姓名：%s\n",stu[i].name);
+		         printf("性别：%s\n",stu[i].xing);
+		         printf("生日：%s\n",stu[i].bir);
+		         printf("家庭地址：%s\n",stu[i].dizhi);
+		         c=1;
+		         break;
+			}
+
+		}
+		if(c==0)
+		{
+			b[d]=a+1;//记录第几个人查询失败
+			d++; 
+		}
+	}
+	printf("本次共查询%d人次，其中失败%d次：\n",j,d);
+	for(i=0;i<d;i++)
+	{
+		printf("第%d个学生查无此人！\n",b[i]);
+	}
+	printf("请按回车键结束！");
+	getchar();
+	getchar();
+	system("cls");
+	return;
+}
+void query_name(student stu[])//查询——姓名 
+{
+	int i,j,k,b,c[20],d=0;
+	char a[20][10];
+	printf("请输入本次要查询的学生个数(不大于20)： ");
+	scanf("%d",&j);	
+	for(i=0;i<j;i++)
+	{
+		printf("请输入要输入要查询的第%d个学生的姓名：",i+1);
+		getchar();
+		gets(a[i]);
+    }
+    for(k=0;k<j;k++)
+	{
+		b=0;
+		for(i=0;i<yishuju;i++)// yishuju变量用来记录本系统的学生个数； 
+		{
+			if(strcmp(a[k],stu[i].name)==0)
+			{
+			     printf("\n第%d个学生的信息为：\n",k+1);
+			     printf("学号：%d\n",stu[i].num);
+		         printf("姓名：%s\n",stu[i].name);
+		         printf("性别：%s\n",stu[i].xing);
+		         printf("生日：%s\n",stu[i].bir);
+		         printf("家庭地址：%s\n",stu[i].dizhi);
+		         b=1;
+		         break;
+			}
+
+		}
+		if(b==0)
+		{
+			c[d]=k+1;//记录第几个人查询失败
+			d++; 
+		}
+	}
+	printf("本次共查询%d人次，其中失败%d次：\n",j,d);
+	for(i=0;i<d;i++)
+	{
+		printf("第%d个学生查无此人！\n",c[i]);
+	}
+	printf("请按回车键结束！");
+	getchar();
+	getchar();
+	system("cls");
+	return;
+    
+}
+void query(student stu[])//查询 
+{
+	int i,j,k;
+	while(1)
+	{printf("**********查询信息**********\n");
+	printf("          1.学号 \n");
+	printf("          2.姓名\n");
+	printf("          3.退出\n");	
+	printf("\n请输入检索方式：");
+	scanf("%d",&i);
+	getchar();
+	switch(i)
+	{
+		case 1:
+		{
+			system("cls");
+			query_num(stu);
+			break;
+		}
+		case 2:
+		{
+			system("cls");
+			query_name(stu);
+			break;
+		} 
+		case 3:
+		{
+			system("cls");
+			return;
+		}
+	}}	
+}
+void paixu(student stu[])//排序		 
+{
+	int i,j,k;
+	student temp;
+	printf("请按1确认进行排序，按0退出！");
+	scanf("%d",&j);
+	switch(j)
+	{
+		case 1:
+		{
+			for(i=0;i<yishuju;i++)
+			{
+				for(k=i+1;k<yishuju;k++)
+				{
+					if(stu[k].num<stu[i].num)
+					{
+						temp=stu[k];
+						stu[k]=stu[i];
+						stu[i]=temp;
+					}
+				}
+			}
+			printf("成功！！请按回车键退出！\n");
+			getchar();
+			getchar();
+			system("cls");
+			break;
+		}
+		case 0:
+		{
+			system("cls");
+			return;
+		}
+		
+	}
+}
+void tongji_nannv(student stu[])//统计男女比例 
+{
+	int i,j=0,k=0;
+	float nan,nv;
+	for(i=0;i<yishuju;i++)
+	{
+		if((strcmp(stu[i].xing,"男"))==0)
+		{
+			++j;
+		}
+		if((strcmp(stu[i].xing,"女"))==0)
+		{
+			++k;
+		}
+	}
+	nan=(float)j/yishuju;
+	nv=(float)k/yishuju;
+	printf("男生比例为%.3f女生比例为%.3f",nan,nv);
+	getchar();
+	system("cls");
+	return;
+} 
+void tongji(student stu[])//统计 
+{
+	int i,j,k,a=1,nan,nv,n,item;
+	while(a)
+   {printf("**********统计信息**********\n");
+	printf("          1.男女比例 \n");
+	printf("          2.省份\n");
+	printf("          3.退出\n");	
+	printf("\n请输入检索方式：");
+    scanf("%d",&n);
+	getchar();
+	switch(n)
+	{
+		case 1:
+		{
+			system("cls");
+			tongji_nannv(stu);
+            break;
+		}
+		case 2:
+		{
+			system("cls");
+			printf("\n本功能建设中敬请期待！");
+			getchar();
+			system("cls"); 
+			break;
+		}
+		case 3:
+		{
+			system("cls");
+			return;
+		}
+	} 
+	 
+   }
+}
+void output_nan(student stu[])//输出男生到屏幕 
+{
+	int i,k=0;
+	printf("请按回车键输出！");
+	getchar();
+	printf("\n");
+	for(i=0;i<yishuju;i++)
+	{
+		if(strcmp(stu[i].xing,"男")==0)
+		{
+			printf("学号：%d\n",stu[i].num);
+		    printf("姓名：%s\n",stu[i].name);
+		    printf("性别：%s\n",stu[i].xing);
+		    printf("生日：%s\n",stu[i].bir);
+		    printf("家庭地址：%s\n",stu[i].dizhi);
+		    ++k;
+		} 
+	}
+	printf("\n本次共在%d个学生中输出%d个男生\n",yishuju,k);
+	getchar();
+	getchar();
+	system("cls"); 
+    return;
+}
+void output_nv(student stu[])//输出女生到屏幕 
+{
+	int i,k=0;
+	printf("请按回车键输出！");
+	getchar();
+	printf("\n");
+	for(i=0;i<yishuju;i++)
+	{
+		if(strcmp(stu[i].xing,"女")==0)
+		{
+			printf("学号：%d\n",stu[i].num);
+		    printf("姓名：%s\n",stu[i].name);
+		    printf("性别：%s\n",stu[i].xing);
+		    printf("生日：%s\n",stu[i].bir);
+		    printf("家庭地址：%s\n",stu[i].dizhi);
+		    ++k;
+		} 
+	}
+	printf("\n本次共在%d个学生中输出%d个女生\n",yishuju,k);
+	getchar();
+	getchar();
+	system("cls"); 
+	return;	
+}
+void output_all(student stu[])//输出所有数据到屏幕 
+{
+	int i;
+	for(i=0;i<yishuju;i++)
+	{
+		printf("学号：%d\n",stu[i].num);
+        printf("姓名：%s\n",stu[i].name);
+        printf("性别：%s\n",stu[i].xing);
+        printf("生日：%s\n",stu[i].bir);
+        printf("家庭地址：%s\n",stu[i].dizhi);
+	}
+	printf("\n本次共输出%d个学生！\n",yishuju);
+	getchar();
+	getchar();
+	system("cls"); 
+	return;
+}
+void outmain_paixu(student stu[]);//输出主函数（排序） 声明 
+void output(student stu[]);//输出 声明		 
+void outfile();//输出文件 声明 
+void outmain(student stu[])//输出主函数 
+{
+	int i,n;
+	while(1)
+	{printf("**********输出**********\n");
+	printf("          1.输出到屏幕 \n");
+	printf("          2.输出到文件\n");
+    printf("          3.退出\n");
+	printf("\n请输入输出方式：");
+    scanf("%d",&n);
+	getchar();
+	switch(n)
+	{
+		case 1:
+		{
+			system("cls");
+			output(stu);
+			break;
+		}
+		case 2:
+		{
+			system("cls");
+			outfile(stu);
+			break;
+		}
+		default:
+		{
+			printf("输入错误请重试！！\n");
+			getchar();
+			system("cls");
+			break; 
+		}
+		case 3:
+		{
+			system("cls");
+			return;
+		}
+	}
+	}
+}
+void outmain_paixu(student stu[])//输出主函数 （排序） 
+{
+	int i,j,n,k,nannum=0,nvnum=0;
+	student temp;
+	student nan[50],nv[50];	
+	while(1)
+	{printf("**********输出前排序**********\n");
+	printf("          1.按照学号进行排序 \n");
+	printf("          2.按照性别进行排序\n");
+    printf("          3.退出\n");
+	printf("\n请输入输出方式：");
+    scanf("%d",&n);
+	getchar();
+	switch(n)
+	{
+		case 1:
+		{
+			for(i=0;i<yishuju;i++)
+			{
+				for(k=i+1;k<yishuju;k++)
+				{
+					if(stu[k].num<stu[i].num)
+					{
+						temp=stu[k];
+						stu[k]=stu[i];
+						stu[i]=temp;
+					}
+				}
+			}
+			printf("成功！！请按回车键退出！\n");
+			getchar();
+			system("cls");
+			return;
+			break;
+		}
+		case 2:
+		{
+			for(i=0;i<yishuju;i++)
+			{
+				if((strcmp(stu[i].xing,"男"))==0)
+				{
+					nan[nannum]=stu[i];
+					nannum++;
+				} 
+				if((strcmp(stu[i].xing,"女"))==0)
+				{
+					nv[nvnum]=stu[i];
+					nvnum++;
+				} 
+
+			}
+			for(i=0;i<nannum;i++)
+			{
+				stu[i]=nan[i];
+			}
+			for(k=0;k<nvnum;k++)
+			{
+				stu[nannum+k]=nv[k];
+			}
+			printf("成功！！请按回车键退出！\n");
+			getchar();
+			system("cls");
+			return;
+			break;
+			
+		}
+		case 3:
+		{
+			system("cls");
+			return;
+		}
+		
+	}}
 	
 }
-void query()
+void output(student stu[])//输出到屏幕 
 {
+	int i,j,k,n;
+	while(1)
+	{printf("**********输出信息**********\n");
+	printf("          0.排序\n");	
+	printf("          1.输出全部男生 \n");
+	printf("          2.输出全部女生\n");
+	printf("          3.输出全部学生\n");
+	printf("          4.退出\n");
+	printf("\n请输入输出方式：");
+    scanf("%d",&n);
+	getchar();
+	switch(n)
+	{
+		case 0:
+		{
+			system("cls");
+			outmain_paixu(stu);
+			break;
+			
+		} 
+		case 1:
+		{
+			system("cls");
+			output_nan(stu);
+			break;
+		}
+		case 2:
+		{
+			system("cls");
+			output_nv(stu);
+			break;
+		}
+		case 3:
+		{
+			system("cls");
+			output_all(stu);
+			break;
+		}
+		case 4:
+		{
+			system("cls");
+			return;
+		}
+	}		
+	}
+}
+void outfile_nan(student stu[])//输出男生到文件 
+{
+	int i,j,k=0;
+	FILE *fp;
+	if((fp=fopen("nansheng.txt","w"))==NULL)
+	{
+		printf("打开文件失败请寻找原因并重试！！");
+		exit(1);
+	}
+	for(i=0;i<yishuju;i++)
+	{
+		if(strcmp(stu[i].xing,"男")==0)
+		{
+			fprintf(fp,"学号：%d\n",stu[i].num);
+			fprintf(fp,"姓名：%s\n",stu[i].name);
+			fprintf(fp,"性别：%s\n",stu[i].xing);
+			fprintf(fp,"生日：%s\n",stu[i].bir);
+			fprintf(fp,"家庭地址：%s\n",stu[i].dizhi);
+			++k;
+		}
+	}
+	printf("\n本次共在%d个学生中输出%d个男生\n",yishuju,k);
+	getchar();
+	getchar();
+	fclose(fp);
+	system("cls"); 
+    return;
+}
+
+void outfile_nv(student stu[])//输出女生到文件 
+{
+    int i,j,k=0;
+	FILE *fp;
+	if((fp=fopen("nvsheng.txt","w"))==NULL)
+	{
+		printf("打开文件失败请寻找原因并重试！！");
+		exit(1);
+	}
+	for(i=0;i<yishuju;i++)
+	{
+		if(strcmp(stu[i].xing,"女")==0)
+		{
+			fprintf(fp,"学号：%d\n",stu[i].num);
+			fprintf(fp,"姓名：%s\n",stu[i].name);
+			fprintf(fp,"性别：%s\n",stu[i].xing);
+			fprintf(fp,"生日：%s\n",stu[i].bir);
+			fprintf(fp,"家庭地址：%s\n",stu[i].dizhi);
+			++k;
+		}
+	}
+	printf("\n本次共在%d个学生中输出%d个女生\n",yishuju,k);
+	getchar();
+	getchar();
+	fclose(fp);
+	system("cls"); 
+    return;
+}
+void outfile_all(student stu[])//输出所有内容到文件 
+{
+	int i,j,k=0;
+	FILE *fp;
+	if((fp=fopen("suoyouxuesheng.txt","w"))==NULL)
+	{
+		printf("打开文件失败请寻找原因并重试！！");
+		exit(1);
+	}
+	for(i=0;i<yishuju;i++)
+	{
+		fprintf(fp,"学号：%d\n",stu[i].num);
+        fprintf(fp,"姓名：%s\n",stu[i].name);
+        fprintf(fp,"性别：%s\n",stu[i].xing);
+        fprintf(fp,"生日：%s\n",stu[i].bir);
+        fprintf(fp,"家庭地址：%s\n",stu[i].dizhi);
+	}
+	printf("\n本次共输出%d个学生！\n",yishuju);
+	getchar();
+	getchar();
+	fclose(fp);
+	system("cls"); 
+	return;
+}
+void outfile(student stu[])//输出文件 
+{
+	int i,j,k,n;
+	while(1)
+	{printf("**********输出信息 (到文件)**********\n");
+	printf("          0.排序\n");	
+	printf("          1.输出全部男生 \n");
+	printf("          2.输出全部女生\n");
+	printf("          3.输出全部学生\n");
+	printf("          4.退出\n");
+	printf("\n请输入输出方式：");
+    scanf("%d",&n);
+	getchar();
+	switch(n)
+	{
+		case 0:
+		{
+			system("cls");
+			outmain_paixu(stu);
+			break;
+			
+		} 
+		case 1:
+		{
+			system("cls");
+			outfile_nan(stu);
+			break;
+		}
+		case 2:
+		{
+			system("cls");
+			outfile_nv(stu);
+			break;
+		}
+		case 3:
+		{
+			system("cls");
+			outfile_all(stu);
+			break;
+		}
+		case 4:
+		{
+			system("cls");
+			return;
+		}
+	}		
+	}
+	
 	
 }
-void paixu(int i)
+void huigehaoshuai()//使用此函数可产生核爆 
 {
+	int i,j,k=1,a,b;
+	while(k)
+	{
+		printf("请按回车键继续！！\n"); 
+		getchar();
+		getchar();
+		for(i=1;i<=66;i++)
+		{
+			printf("回哥好帅！！！（%d/66）\n",i);
+			getchar();
+		}
+		printf("请按回车退出！\n");
+		getchar(); 
+		printf("不对！！(此处应该再按回车)\n");
+		getchar(); 
+		printf("请回答回哥帅不帅/手动滑稽\n");
+		printf("1.帅 2.不帅(请输入数字)\n");
+		printf("请回答：");
+		scanf("%d",&a);
+		if(a==1)
+		{
+			printf("代表党中央感谢你！谢谢！请按回车键退出！！\n");
+			getchar();
+			getchar();
+			k=0; 
+			system("cls"); 
+		}
+		else if(a==2)
+		{
+			printf("乱说话请按回车键重新学习！\n"); 
+		}
+		else
+		{
+			printf("输入错误请重新学习！！\n");
+		}
 	
+	}
 }
-void tongji()
-{
-	
-}
-void output()
-{
-	
-}
-void outfile()
-{
-	
-}
-int main()
+int main()//主函数 
 {
 	int i,j,k=1,yi,er;
 
 	student stu[50];
+
 	printf("**********学生档案管理系统**********\n");
 	printf("*请输入以下对应的数字实现对应的功能*\n");
 	printf("************************************\n");
@@ -219,9 +985,9 @@ int main()
 	scanf("%d",&yi); 
 	switch(yi)
 	{
-		case 1:system("cls");break;
-		default:printf("输入错误请退出后重试！！");exit(0);break; 
-		case 2:printf("再次按空格键退出。\n");exit(0);
+		case 1:{system("cls");break;}
+		default:{printf("输入错误请按回车键后重试！！");exit(0);break;} 
+		case 2:{printf("再次按回车键退出。\n");exit(0);}
 	}
 	while(k==1)
 	{printf("**********学生档案管理系统**********\n");
@@ -229,15 +995,25 @@ int main()
 	printf("*************1.输入数据*************\n");
 	printf("*************2.修改数据*************\n");
 	printf("*************3.增加数据*************\n");
-	printf("*************4.插入数据*************\n");
+	printf("*************4.本程序福利***********\n");
 	printf("*************5.删除数据*************\n");
 	printf("*************6.查询数据*************\n");
 	printf("*************7.排序数据*************\n");
-	printf("*************8.输出数据*************\n");
+	printf("*************8.统计数据*************\n");	
+	printf("*************9.输出数据*************\n");
+	printf("*************10.退出程序*************\n");
     printf("请输入您要执行的操作（输入数字）： ");
 	scanf("%d",&er); 
 	switch(er)
 	{
+		default:
+		{
+			printf("输入错误请按回车键后重试！！");
+			getchar();
+			getchar();
+			system("cls");
+			break;
+		}
 		case 1:
 		{
 			system("cls");
@@ -254,13 +1030,58 @@ int main()
 			change(stu,ershuju); 
 			break; 
 		}
+		case 4:
+		{
+			system("cls");
+			huigehaoshuai();
+			break;
+			
+		} 
 		case 3:
 		{
 			system("cls");
 			inputnew(stu);
 			break;
 		}
-	}
-	}
-
+		case 5:
+		{
+			system("cls");
+			outdate(stu);
+			break;
+			
+		}
+		case 6:
+		{
+			system("cls");
+			query(stu);
+			break;
+		}
+		case 7:
+		{
+			system("cls");
+			paixu(stu);
+			break;
+		} 
+		case 8:
+		{
+			system("cls");
+			tongji(stu);
+			break;
+		}
+		case 9:
+		{
+			system("cls");
+			outmain(stu);
+			break;
+		}
+		case 10:
+		{
+			exit(0);
+			break;
+		} 
+		 
+	
+	}}
+    return 0;
 }
+
